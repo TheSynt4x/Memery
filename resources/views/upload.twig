@@ -1,0 +1,58 @@
+{% extends 'templates/app.twig' %}
+{% block description %}Share{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="panel panel-default" style="width:60%;margin-top:3%;position:relative;margin-left:auto;margin-right:auto;">
+
+        <div class="panel-heading">Upload</div>
+            <div class="panel-body">
+                {% if userdata.ban == 1 %}
+                    <div class="alert alert-danger">You have been banned and therefore you cannot post anymore.</div>
+                {% endif %}
+                <form action="{{ path_for('upload') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <div class="form-group {{ errors.caption ? 'has-error' : '' }}">
+                        <label for="caption">Meme Caption:</label>
+                        <input class="form-control" style="width:50%" type="text" name="caption" id="caption" placeholder="foney meme" {{ userdata.ban == 1 ? 'disabled' : ''}}>
+                        {% if errors.caption %}
+                            <span class="help-block">{{ errors.caption | first }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <!--
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+
+                        <select class="form-control" style="width:50%" name="category" id="category" {{ userdata.ban == 1 ? 'disabled' : ''}}>
+                            <option value="1">Front</option>
+                            <option value="2">Rising</option>
+                            <option value="3">Fresh</option>
+                        </select>
+                    </div>
+                    -->
+                    <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                        <label for="file">Choose a file:</label><br/>
+                        <input type="file" class="btn btn-default" name="image" style="width:50%" id="image" {{ userdata.ban == 1 ? 'disabled' : ''}}>
+                        {% if errors.image %}
+                            <span class="help-block">{{ errors.image | first }}</span>
+                        {% endif %}
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" value="Upload" {{ userdata.ban == 1 ? 'disabled' : ''}}>
+
+                    {{ csrf_field() | raw }}
+                </form>
+                {% if uploaded %}
+                <br/>
+
+                <div class="alert alert-success">The image has been uploaded.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    $("li#upload").addClass("active");
+</script>
+{% endblock %}

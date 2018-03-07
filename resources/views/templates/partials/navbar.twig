@@ -1,0 +1,67 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../">{{ title }}</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+
+            <ul class="nav navbar-nav">
+                <li id="home">
+                    <a href="{{ path_for('home') }}">Home</a>
+                </li>
+                <li id="front">
+                    <a href="{{ path_for('meme.front') }}">Front</a>
+                </li>
+                <li id="rising">
+                    <a href="{{ path_for('meme.rising') }}">Rising</a>
+                </li>
+                <li id="fresh">
+                    <a href="{{ path_for('meme.fresh') }}">Fresh</a>
+                </li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if user is null %}
+                    <li id="login">
+                        <a href="{{ path_for('login') }}">Login</a>
+                    </li>
+                    <li id="register">
+                        <a href="{{ path_for('tos') }}">Register</a>
+                    </li>
+                {% else %}
+                    <li id="upload">
+                        <a href="{{ path_for('upload') }}">Upload</a>
+                    </li>
+                    <li class="dropdown" id="ucp">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Control Panel</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ path_for('profile', {'name': userdata.username}) }}">View Profile</a>
+                            </li>
+                            <li>
+                                <a href="{{ path_for('inbox') }}">Inbox ({{ count }})</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{{ path_for('avatar') }}">Change Avatar</a>
+                            </li>
+                            <li>
+                                <a href="{{ path_for('password') }}">Change Password</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ path_for('logout') }}">Logout</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

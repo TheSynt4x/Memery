@@ -1,0 +1,60 @@
+{% extends 'templates/app.twig' %}
+{% block description %}Inbox{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+            <a href="{{ path_for('inbox.compose') }}" class="btn btn-danger btn-sm btn-block" role="button">COMPOSE</a>
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <button type="button" class="btn btn-default" style="width:40px" title="Refresh">
+                <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <a href="{{ path_for('inbox') }}">
+                        <span class="badge pull-right">{{ count }}</span>
+                        Inbox
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="{{ path_for('inbox.sent') }}">Sent Mail</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#home" data-toggle="tab">
+                        <span class="glyphicon glyphicon-inbox"></span>Inbox</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <div class="list-group">
+                        {% if from_messages is empty %}
+                            <h3>No messages in your inbox</h3>
+                        {% else %}
+                            {% for message in from_messages %}
+                                <a href="{{ path_for('inbox.received', {'id': message.id}) }}" class="list-group-item">
+                                    <span class="glyphicon glyphicon-star-empty"></span>
+                                    <span class="name" style="min-width: 120px; display: inline-block;">{{ message.from_user | capitalize }}</span>
+                                    <span class="">{{ message.subject }}</span>
+                                    <span class="badge">{{ message.date }}</span>
+                                    <span class="pull-right"></span>
+                                    <span class="glyphicon glyphicon-paperclip"></span>
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% include 'templates/partials/pagination.twig' %}
+        </div>
+    </div>
+{% endblock %}

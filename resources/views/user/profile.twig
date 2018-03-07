@@ -1,0 +1,41 @@
+{% extends 'templates/app.twig' %}
+{% block description %}{{ user.username | capitalize }}'s Profile{% endblock %}
+{% block content %}
+    {% if user.ban == 1 %}
+        <div class="alert alert-danger">This user has been banned for violating the rules.</div>
+    {% endif %}
+    {% if user != null %}
+        <div class="panel panel-default" style="width:700px;margin-top:3%;position:relative;margin-left:auto;margin-right:auto;">
+            <div class="panel-heading">{{ user.username | capitalize }}'s Profile</div>
+            <div class="panel-body">
+                <div class="col-sm-6 col-md-4">
+                    <img src="{{ base_url() }}/images/avatars/{{ user.avatar is empty ? 'default.jpg' : user.avatar }}" height="200" width="200"></img><br/><br/>
+                    {% if userdata.isAdmin() and userdata.username != user.username and user.isAdmin() == false %}
+                        <a class="btn btn-danger" href="{{ path_for('admin.ban', {'username': user.username}) }}">{{user.isBanned() ? 'Unban' : 'Ban'}} this user</a><br/><br/>
+                        <a class="btn btn-danger" href="{{ path_for('admin.warn', {'username': user.username}) }}">Warn this user</a><br/>
+                    {% endif %}
+                </div>
+                <div class="col-sm-6 col-md-8">
+                    <b>Username:</b>
+                    {{ user.username }}<br/><br/>
+                    <b>Role:</b>
+                    {{ user.admin == 1 ? 'Website Administrator' : 'Member' }}<br/><br/>
+                    <b>Posts:</b>
+                    {{ user.post_count }}<br/><br/>
+                    <b>Status:</b>
+                    {{ user.isBanned() == false ? 'Not banned' : 'Banned' }}<br/><br/>
+                    <b>Biography:</b>
+                    SomeBODY once told me the world is gonna roll me.<br/><br/>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+{% block js %}
+<script>
+    {% if user.username == userdata.username %}
+    $("li#ucp").addClass("active");
+    {% endif %}
+</script>
+{% endblock %}

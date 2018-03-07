@@ -1,0 +1,131 @@
+{% extends 'templates/app.twig' %}
+{% block description %}Home{% endblock %}
+{% block content %}
+    {% if inboxmsg %}
+        <div class="alert alert-info">{{ inboxmsg }}</div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-7">
+            {% if memes is empty %}
+                <h1>No memes here</h1>
+            {% else %}
+                {% for meme in memes %}
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="padding: 0;">
+                            <h4>
+                                <strong style="margin-left: 1.5%;">
+                                    <a href="{{ path_for('meme', {'id': meme.id}) }}">
+                                        {% if meme.title == '' %}
+                                            No Caption
+                                        {% else %}
+                                            {{ meme.title }}
+                                        {% endif %}
+                                    </a>
+                                </strong>
+                            </h4>
+
+                            <img style="position: relative;" class="gagimage" src="{{  base_url() }}/images/{{ meme.image }}" width="100%">
+
+                            <div id="share" style="margin-top: 2%; margin-bottom: 2%; margin-left: 1.5%; float: left;">
+
+                                <p>
+                                    <b id="points.{{ meme.id }}">Points: {{ meme.points }}.</b>
+
+                                    Posted by:
+                                    <b>
+                                        <a href="{{ path_for('profile', {'name':meme.author}) }}">{{ meme.author }}</a>
+                                    </b>.
+                                </p>
+
+                                <button type="button" class="btn btn-default" onclick="upvote({{ meme.id }})">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                                </button>
+
+                                <button type="button" class="btn btn-default" onclick="downvote({{ meme.id }})">
+                                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                                </button>
+
+                                <button type="button" class="btn btn-default" onclick="showComments({{ meme.id }});">
+                                    <span class="glyphicon glyphicon-comment"></span>
+                                </button>
+
+                            </div>
+
+                            {% if meme.author == userdata.username %}
+                                <p class="text-right" style="margin-top: 2%;margin-right:1.5%">
+                                    <a href="{{ path_for('meme.edit', {'id': meme.id}) }}">Edit</a>
+                                    |
+                                    <a href="{{ path_for('meme.delete', {'id': meme.id}) }}">Delete</a>
+                                </p>
+                            {% elseif userdata.isAdmin() %}
+                                <p class="text-right" style="margin-top: 2%;margin-right:1.5%">
+                                    <a href="{{ path_for('admin.delete', {'id': meme.id}) }}">Delete</a>
+                                </p>
+                            {% endif %}
+
+                        </div>
+
+                        <div id="comments.{{ meme.id }}"></div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% include 'templates/partials/pagination.twig' %}
+
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+
+        {% if 'rising' in url[3] %}
+            $("li#rising").addClass("active");
+        {% elseif 'front' in url[3] %}
+            $("li#front").addClass("active");
+        {% elseif 'fresh' in url[3] %}
+            $("li#fresh").addClass("active");
+        {% else %}
+            $("li#home").addClass("active");
+        {% endif %}
+
+        function showComments(id) {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("comments." + id).innerHTML = this.responseText;
+                }
+            };
+
+            xhttp.open("GET", "../comments/" + id, true);
+            xhttp.send();
+        }
+
+        function upvote(id) {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText == "") this.responseText = "0";
+                    document.getElementById("points." + id).innerText = "Points: " + this.responseText + ".";
+                }
+            };
+
+            xhttp.open("GET", "../vote/up/" + id, true);
+            xhttp.send();
+        }
+
+        function downvote(id) {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("points." + id).innerText = "Points: " + this.responseText + ".";
+                }
+            };
+
+            xhttp.open("GET", "../vote/down/" + id, true);
+            xhttp.send();
+        }
+    </script>
+{% endblock %}

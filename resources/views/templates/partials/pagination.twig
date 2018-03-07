@@ -1,0 +1,19 @@
+{% if pagination.needed %}
+    <ul class="pagination pagination-md">
+        {% if pagination.type == 2 %}
+            {% if pagination.page >= 2 %}
+                <li><a href="?page={{ pagination.page - 1 }}">&lt;</a></li>
+            {% endif %}
+
+            {% if (pagination.page) < pagination.lastpage %}
+                <li><a href="?page={{ pagination.page + 1 }}">&gt;</a></li>
+            {% endif %}
+        {% endif %}
+
+        {% if pagination.type == 1 %}
+            {% for i in 1..pagination.lastpage %}
+                <li class="{{ i == pagination.page ? 'active' : ''}}"><a href="?page={{i}}">{{ i }}</a></li>
+            {% endfor %} 
+        {% endif %}
+    </ul>
+{% endif %}

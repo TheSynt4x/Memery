@@ -1,0 +1,71 @@
+{% extends 'templates/app.twig' %}
+{% block description %}Compose{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-5 col-md-8">
+            <h3>Compose a message</h3>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <a href="{{ path_for('inbox') }}">
+                        <span class="badge pull-right">{{ count }}</span>
+                        Inbox
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path_for('inbox.sent') }}">Sent Mail</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-3 col-md-6">
+            <form role="form" action="{{ path_for('inbox.compose') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <div class="form-group {{errors.to ? 'has-error' : ''}}">
+                    <label class="col-sm-2" for="inputTo">To:</label>
+                    <div style="width:50%" class="col-sm-10">
+                        <input type="text" class="form-control" id="inputTo" name="to" placeholder="username" value="{{ old.inputTo }}">
+                        {% if errors.to %}
+                            <span class="help-block">{{ errors.to | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group {{errors.subject ? 'has-error' : ''}}">
+                    <label class="col-sm-2" for="inputSubject">Subject:</label>
+                    <div class="col-sm-10" style="width:50%"><input type="text" id="inputSubject" class="form-control" name="subject" value="{{ old.inputSubject }}" placeholder="subject">
+                        {% if errors.subject %}
+                            <span class="help-block">{{ errors.subject | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                    <div class="col-sm-10" style="width:80%">
+                        <label for="file">Choose a file:</label><br/>
+                        <input type="file" class="btn btn-default" name="image" style="width:50%" id="image">
+                        {% if errors.image %}
+                            <span class="help-block">{{ errors.image | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group {{errors.body ? 'has-error' : ''}}">
+                    <label class="col-sm-12" for="inputBody">Message:</label>
+                    <div class="col-sm-12">
+                        <textarea class="form-control" id="inputBody" name="body" rows="10"></textarea>
+                        {% if errors.body %}
+                            <span class="help-block">{{ errors.body | first }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <input type="submit" class="btn btn-primary">
+
+                {{ csrf_field() | raw }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

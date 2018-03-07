@@ -1,0 +1,25 @@
+{% set id = 0 %}
+{% if comments is empty %}
+<p style="font-size:15px;margin-left:2%;">No comments</p>
+{% else %}
+    {% for comment in comments %}
+        <div class="media" id="comments" style="margin-left:1.5%;">
+            <a class="pull-left" href="#">
+                <img class="media-object" src="{{ base_url() }}/images/avatars/{{ comment.avatar == '' ? 'default.jpg' : comment.avatar }}" height="64" width="64" alt="">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading"><a href="{{ path_for('profile', {'name': comment.author }) }}">{{ comment.author }}</a>
+                    <small style="margin-left:1%;">{{ comment.date }}</small>
+                </h4>
+
+                {% if '>' in comment.comment|raw != false %}
+                    <p style="color:green;">{{ comment.comment|raw }}</p>
+                {% else %}
+                    <p>{{ comment.comment }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <br/>
+        {% set id = comment.post_id %}
+    {% endfor %}
+{% endif %}

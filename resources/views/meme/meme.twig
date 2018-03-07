@@ -1,0 +1,71 @@
+{% extends 'templates/app.twig' %}
+{% block description %}View Meme{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1>{{ meme.title }}</h1>
+
+                <p class="lead">By
+                    <a href="{{ path_for('profile', {'name': meme.author }) }}">{{ meme.author }}</a>
+                </p>
+                <hr/>
+
+                <img class="img-responsive" src="{{ base_url() }}/images/{{ meme.image }}" alt="">
+                <hr/>
+                {% if user is null %}
+                    <h4>You are only able to see the comments, not comment. To leave a comment you have to
+                        <a href="{{ path_for('login') }}">login</a>.</h4>
+                    <hr/>
+                {% else %}
+                    {% if userdata.isBanned() %}
+                        <div class="alert alert-danger">You have been banned and therefore you cannot post anymore.</div>
+                    {% endif %}
+
+                    {% if meme.author == userdata.username %}
+                    <p class="text-left"><a href="{{ path_for('meme.edit', {'id': meme.id}) }}">Edit</a> | <a href="{{ path_for('meme.delete', {'id': meme.id}) }}">Delete</a></p>
+                    {% elseif userdata.isAdmin() %}
+                    <p class="text-left"><a href="{{ path_for('admin.delete', {'id': meme.id}) }}">Delete</a></p>
+                    {% endif %}
+
+                    <br/>
+
+                    <div class="well">
+                        <h4>Leave a Comment:</h4>
+                        <form id="comments" action="{{ path_for('meme', {'id': meme.id}) }}#comments" method="POST" role="form">
+                            <div class="form-group {{ errors.comment ? 'has-error' : '' }}">
+                                <textarea class="form-control" name="comment" rows="3" {{ userdata.ban == 1 ? 'disabled' : ''}}></textarea>
+                                {% if errors.comment %}
+                                    <span class="help-block">{{ errors.comment | first }}</span>
+                                {% endif %}
+                            </div>
+
+                            <input type="submit" class="btn btn-primary" name="btn" value="Submit" {{ userdata.ban == 1 ? 'disabled' : ''}}>
+                            {{ csrf_field() | raw }}
+                        </form>
+                    </div>
+                {% endif %}
+
+                {% include 'templates/partials/comments.twig' %}
+
+                {% include 'templates/partials/pagination.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        function showComments(id) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("comments." + id).innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "../../comments/" + id, true);
+            xhttp.send();
+        }
+
+        setInterval(showComments, 1000);
+    </script>
+{% endblock %}

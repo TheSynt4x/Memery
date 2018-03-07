@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>{{ title }} - {% block description %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ base_url() }}/css/style.css" rel="stylesheet">
+    <link href="{{ base_url() }}/css/sticky-footer-navbar.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        .center {text-align: center; margin-left: auto; margin-right: auto; margin-bottom: auto; margin-top: auto;}
+    </style>
+
+    {% if 'inbox' in url[3] %}
+    <style>
+        body{ margin-top:50px;}
+        .nav-tabs .glyphicon:not(.no-margin) { margin-right:10px; }
+        .tab-pane .list-group-item:first-child {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+        .tab-pane .list-group-item:last-child {border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;}
+        .tab-pane .list-group .checkbox { display: inline-block;margin: 0px; }
+        .tab-pane .list-group input[type="checkbox"]{ margin-top: 2px; }
+        .tab-pane .list-group .glyphicon { margin-right:5px; }
+        .tab-pane .list-group .glyphicon:hover { color:#FFBC00; }
+        a.list-group-item.read { color: #222;background-color: #F3F3F3; }
+        hr { margin-top: 5px;margin-bottom: 10px; }
+        .nav-pills>li>a {padding: 5px 10px;}
+
+        .ad { padding: 5px;background: #F5F5F5;color: #222;font-size: 80%;border: 1px solid #E5E5E5; }
+        .ad a.title {color: #15C;text-decoration: none;font-weight: bold;font-size: 110%;}
+        .ad a.url {color: #093;text-decoration: none;}
+    </style>
+{% endif %}
+</head>
+
+<body>
+    {% include 'templates/partials/navbar.twig' %}
+
+    <div class="container">
+        {% include 'templates/partials/flash.twig' %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    {% include 'templates/partials/footer.twig' %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    {% block js %}{% endblock %}
+</body>

@@ -1,0 +1,32 @@
+{% extends 'templates/app.twig' %}
+{% block description %}Share{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="panel panel-default" style="width:60%;margin-top:3%;position:relative;margin-left:auto;margin-right:auto;">
+        <div class="panel-heading">Terms of Service</div>
+            <div class="panel-body">
+                <p>
+                    By using the this website ("Service"), or any services of {{ title }}, Inc ("{{ title }}"), you are agreeing to be bound by the following terms and conditions ("Terms of Service").
+                </p>
+
+                <p>Violation of any of the terms below will result in the termination of your account. You agree to use the Service at your own risk.</p>
+
+                <ul>
+                    <li><b>It is strictly prohibited to post pornographical content.</b></li>
+                    <li><b>It is strictly prohibited to post violent or gore related content.</b></li>
+                    <li><b>It is strictly prohibited to post pictures of others without consent</b></li>
+                    <li><b>It is strictly prohibited to use nicknames that can mean harm or offend anyone in any way.</b></li>
+                    <li><b>It is prohibited to spam/flood the comments or any of the sections.</b></li>
+                    <li><b>You must be a human. Accounts registered by "bots" or other automated methods are not permitted.</b></li>
+                    <li><b>You may not use the Service for any illegal or unauthorized purpose.</b></li>
+                </ul>
+
+                <p>If any of the aforementioned rules are not followed, a permanent ban will take place on your account making your account lose the basic functionality of the website.</p>
+                <p>If you continue to not follow the rules, a permanent IP-ban will happen and you will lose access to this website.</p>
+
+                <a href="{{ path_for('register') }}" class="btn btn-default">Accept</a>
+                <a href="{{ path_for('home') }}" class="btn btn-default">Decline</a>
+            </div>
+        </div>
+</div>
+{% endblock %}

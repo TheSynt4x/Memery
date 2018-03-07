@@ -1,0 +1,40 @@
+{% extends 'templates/app.twig' %}
+{% block description %}Compose{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-5 col-md-8">
+            <h3>View Message</h3>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <a href="{{ path_for('inbox') }}">
+                        <span class="badge pull-right">{{ count }}</span>
+                        Inbox
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path_for('inbox.sent') }}">Sent Mail</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-3 col-md-6">
+            <div id="col-sm-4"><strong>Subject:</strong> {{ message.subject }}</div>
+            <hr/>
+            <div id="col-sm-4"><strong>From:</strong> {{ message.from_user }}</div>
+            <hr/>
+
+            <div id="col-sm-4">
+                {% if message.image is not empty %}
+                    <img class="img-responsive" width="300" height="300" src="{{ base_url() }}/images/{{ message.image }}"></img>
+                {% endif %}
+                <br/>
+                {{ message.message }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

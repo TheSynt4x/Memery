@@ -1,0 +1,11 @@
+{% if flash.getMessage('success') %}
+    <div class="alert alert-info">{{ flash.getMessage('success') | first }}</div>
+{% endif %}
+
+{% if flash.getMessage('error') %}
+    <div class="alert alert-danger">{{ flash.getMessage('error') | first }}</div>
+{% endif %}
+
+{% if userdata.isBanned() %}
+    <div class="alert alert-danger">You have been banned!</div>
+{% endif %}
