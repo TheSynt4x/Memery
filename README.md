@@ -6,7 +6,7 @@
 
 <b>The front-end code might be very messy at places but it's fully functional.</b>
 
-<h2>Features:</h2>
+<h2>Features</h2>
 
 <ul>
     <li>Login (100%)</li>
@@ -22,7 +22,7 @@
     <li>Administrating functions such as ban (100%)</li>
 </ul>
 
-<h2>Features to be done in the future:</h2>
+<h2>Features to be done in the future</h2>
 <ul>
     <li>Edit posts</li>
     <li>Delete posts</li>
