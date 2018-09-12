@@ -1,7 +1,7 @@
 <h1>Memery</h1>
 
 <h2>Information</h2>
-<p>This is an updated version of an old project. In short it's a social network/image sharing board where you can upload your own funny pictures, comment on others posts.</p>
+<p>This is an updated version of an old project. In short, it's a social network/image sharing board where you can upload your own funny pictures, comment on others posts.</p>
 <p>This is built using PHP with the framework Slim. As for the front-end I used Bootstrap and simple javascript and a little bit of jQuery to perform certain actions on the website.</p>
 
 <b>The front-end code might be very messy at places but it's fully functional.</b>
