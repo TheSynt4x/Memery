@@ -2,7 +2,8 @@
 
 <h2>Information</h2>
 <p>This is an updated version of an old project. In short, it's a social network/image sharing board where you can upload your own funny pictures, comment on others posts.</p>
-<p>This is built using PHP with the framework Slim. As for the front-end I used Bootstrap and simple javascript and a little bit of jQuery to perform certain actions on the website.</p>
+<p>This is built using PHP with the framework Slim. As for the front-end I used Bootstrap and simple JavaScript and a little bit of jQuery to perform certain actions on the website.</p>
+<p>The reason I started developing this was to learn a new framework, the Slim framework to be precise. And on the road, this project has gone through a lot of changes. I started using dependency injection and other very helpful packages to make it easier to work on in the future (if I ever decide to work on this again). It shares a similar project structure with Laravel, another framework in PHP, and that was done on purpose.</p>
 
 <b>The front-end code might be very messy at places but it's fully functional.</b>
 
