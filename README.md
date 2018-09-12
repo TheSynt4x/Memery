@@ -13,7 +13,7 @@
     <li>Login (100%)</li>
     <li>Register (100%)</li>
     <li>Upload (100%)</li>
-    <li>Profile pictures (100%)</p>
+    <li>Profile pictures (100%)</li>
     <li>Comment (100%)</li>
     <li>Inbox system (100%)</li>
     <li>Moderating posts (100%)</li>
